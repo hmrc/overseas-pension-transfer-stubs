@@ -1,3 +1,6 @@
 # microservice specific routes
 
 GET        /hello-world             uk.gov.hmrc.overseaspensiontransferstubs.controllers.MicroserviceHelloWorldController.hello
+
+GET        /store-answers/:id        uk.gov.hmrc.overseaspensiontransferstubs.controllers.StoreAnswersController.getAnswers(id)
+PUT        /store-answers/:id        uk.gov.hmrc.overseaspensiontransferstubs.controllers.StoreAnswersController.putAnswers(id)
