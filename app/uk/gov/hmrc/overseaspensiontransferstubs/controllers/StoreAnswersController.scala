@@ -17,26 +17,25 @@
 package uk.gov.hmrc.overseaspensiontransferstubs.controllers
 
 import play.api.Logging
-
-import javax.inject.{Inject, Singleton}
-import play.api.libs.json.{JsError, JsObject, JsSuccess, JsValue, Json}
+import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.Random
 
 @Singleton
 class StoreAnswersController @Inject() (
-    cc: ControllerComponents
-)(implicit ec: ExecutionContext)
-    extends BackendController(cc) with Logging {
+                                         cc: ControllerComponents
+                                       )(implicit ec: ExecutionContext)
+  extends BackendController(cc) with Logging {
 
   private var store: Map[String, JsObject] = Map.empty
 
   def getAnswers(id: String): Action[AnyContent] = Action.async {
     store.get(id) match {
       case Some(existing) =>
-        Future.successful(Ok(Json.toJson(existing)))
+        Future.successful(Ok(existing))
       case None =>
         Future.successful(
           NotFound(Json.obj("error" -> s"No user answers found for id='$id'"))
@@ -44,23 +43,32 @@ class StoreAnswersController @Inject() (
     }
   }
 
-  def putAnswers(id: String): Action[JsValue] = Action.async(parse.json) {
-    request =>
-      logger.info(request.body.toString())
-      request.body.validate[JsObject] match {
-        case JsSuccess(jsObj, _) =>
-          store = store.updated(id, jsObj)
-          Future.successful(Ok(jsObj))
+  def putAnswers(id: String): Action[JsValue] = Action.async(parse.json) { request =>
+    logger.info(request.body.toString())
 
-        case JsError(errors) =>
-          Future.successful(
-            BadRequest(
-              Json.obj(
-                "error" -> "Invalid JSON",
-                "details" -> errors.toString
-              )
-            )
-          )
-      }
+    request.body.validate[JsObject] match {
+      case JsSuccess(jsObj, _) =>
+        val updatedWithQt = insertQtNumber(jsObj)
+        store = store.updated(id, updatedWithQt)
+
+        Future.successful(Ok(updatedWithQt))
+
+      case JsError(errors) =>
+        Future.successful(
+          BadRequest(Json.obj(
+            "error" -> "Invalid JSON",
+            "details" -> errors.toString
+          ))
+        )
+    }
+  }
+
+  private def insertQtNumber(original: JsObject): JsObject = {
+
+    val qtNumber = s"QT${100000 + Random.nextInt(900000)}"
+    val maybeData: JsObject = (original \ "data").asOpt[JsObject].getOrElse(Json.obj())
+    val dataWithQt = maybeData + ("qtNumber" -> JsString(qtNumber))
+
+    original + ("data" -> dataWithQt)
   }
 }
