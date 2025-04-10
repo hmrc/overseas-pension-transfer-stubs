@@ -26,9 +26,10 @@ import scala.util.Random
 
 @Singleton
 class StoreAnswersController @Inject() (
-                                         cc: ControllerComponents
-                                       )(implicit ec: ExecutionContext)
-  extends BackendController(cc) with Logging {
+    cc: ControllerComponents
+)(implicit ec: ExecutionContext)
+    extends BackendController(cc)
+    with Logging {
 
   private var store: Map[String, JsObject] = Map.empty
 
@@ -43,32 +44,39 @@ class StoreAnswersController @Inject() (
     }
   }
 
-  def putAnswers(id: String): Action[JsValue] = Action.async(parse.json) { request =>
-    logger.info(request.body.toString())
+  def putAnswers(id: String): Action[JsValue] = Action.async(parse.json) {
+    request =>
+      logger.info(request.body.toString())
 
-    request.body.validate[JsObject] match {
-      case JsSuccess(jsObj, _) =>
-        val updatedWithQt = insertQtNumber(jsObj)
-        store = store.updated(id, updatedWithQt)
+      request.body.validate[JsObject] match {
+        case JsSuccess(jsObj, _) =>
+          val updatedWithQt = insertQtNumber(jsObj)
+          store = store.updated(id, updatedWithQt)
 
-        Future.successful(Ok(updatedWithQt))
+          Future.successful(Ok(updatedWithQt))
 
-      case JsError(errors) =>
-        Future.successful(
-          BadRequest(Json.obj(
-            "error" -> "Invalid JSON",
-            "details" -> errors.toString
-          ))
-        )
-    }
+        case JsError(errors) =>
+          Future.successful(
+            BadRequest(
+              Json.obj(
+                "error" -> "Invalid JSON",
+                "details" -> errors.toString
+              )
+            )
+          )
+      }
   }
 
   private def insertQtNumber(original: JsObject): JsObject = {
 
     val qtNumber = s"QT${100000 + Random.nextInt(900000)}"
-    val maybeData: JsObject = (original \ "data").asOpt[JsObject].getOrElse(Json.obj())
-    val dataWithQt = maybeData + ("qtNumber" -> JsString(qtNumber))
-
-    original + ("data" -> dataWithQt)
+    val maybeData: JsObject =
+      (original \ "data").asOpt[JsObject].getOrElse(Json.obj())
+    if (maybeData.keys.contains("qtNumber")) {
+      original
+    } else {
+      val dataWithQt = maybeData + ("qtNumber" -> JsString(qtNumber))
+      original + ("data" -> dataWithQt)
+    }
   }
 }
