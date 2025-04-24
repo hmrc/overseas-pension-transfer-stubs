@@ -44,13 +44,17 @@ class StoreAnswersController @Inject() (
     }
   }
 
+  private val baseQtNumber = "QT123456"
+
+  private def getRandomQtNumber = s"QT${100000 + Random.nextInt(900000)}"
+
   def putAnswers(id: String): Action[JsValue] = Action.async(parse.json) {
     request =>
       logger.info(request.body.toString())
 
       request.body.validate[JsObject] match {
         case JsSuccess(jsObj, _) =>
-          val updatedWithQt = insertQtNumber(jsObj)
+          val updatedWithQt = insertQtNumber(jsObj, baseQtNumber)
           store = store.updated(id, updatedWithQt)
 
           Future.successful(Ok(updatedWithQt))
@@ -67,9 +71,7 @@ class StoreAnswersController @Inject() (
       }
   }
 
-  private def insertQtNumber(original: JsObject): JsObject = {
-
-    val qtNumber = s"QT${100000 + Random.nextInt(900000)}"
+  private def insertQtNumber(original: JsObject, qtNumber: String): JsObject = {
     val maybeData: JsObject =
       (original \ "data").asOpt[JsObject].getOrElse(Json.obj())
     if (maybeData.keys.contains("qtNumber")) {
