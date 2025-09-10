@@ -1,3 +1,7 @@
 # Add all the application routes to the app.routes file
-->         /overseas-pension-transfer-stubs              app.Routes
 ->         /                          health.Routes
+
+GET        /store-answers/:id                           uk.gov.hmrc.overseaspensiontransferstubs.controllers.StoreAnswersController.getAnswers(id)
+PUT        /store-answers/:id                           uk.gov.hmrc.overseaspensiontransferstubs.controllers.StoreAnswersController.putAnswers(id)
+
+POST       /RESTAdapter/pods/reports/qrops-transfer     uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.submitTransfer
