@@ -45,7 +45,10 @@ class HipController @Inject()(
 
 
 
-  def getAll = ???
+  def getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String]) = checkHeaders {
+    _ =>
+      Ok
+  }
 
   def getSpecific = ???
 
