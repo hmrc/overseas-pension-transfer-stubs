@@ -18,7 +18,7 @@ package uk.gov.hmrc.overseaspensiontransferstubs.controllers
 
 import com.google.inject.Inject
 import play.api.Logging
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.overseaspensiontransferstubs.controllers.actions.CheckHeadersAction
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
@@ -31,7 +31,7 @@ class HipController @Inject()(
                              checkHeaders: CheckHeadersAction
                              ) extends BackendController(cc) with Logging {
 
-  def submitTransfer: Action[AnyContent] = checkHeaders {
+  def submitTransfer: Action[JsValue] = checkHeaders(parse.json) {
     _ =>
       def getRandomFormBundle: String = Random.nextLong(999999999999L).toString
       def getRandomQtNumber: String = s"QT${100000 + Random.nextInt(900000)}"
