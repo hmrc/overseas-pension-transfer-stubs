@@ -20,18 +20,26 @@ import com.google.inject.Inject
 import play.api.Logging
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import uk.gov.hmrc.overseaspensiontransferstubs.controllers.actions.CheckHeadersAction
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
+import java.time.LocalDateTime
+import scala.util.Random
+
 class HipController @Inject()(
-                             cc: ControllerComponents
+                             cc: ControllerComponents,
+                             checkHeaders: CheckHeadersAction
                              ) extends BackendController(cc) with Logging {
 
-  def submitTransfer: Action[AnyContent] = Action {
+  def submitTransfer: Action[AnyContent] = checkHeaders {
     _ =>
+      def getRandomFormBundle: String = Random.nextLong(999999999999L).toString
+      def getRandomQtNumber: String = s"QT${100000 + Random.nextInt(900000)}"
+
       Created(Json.obj("success" -> Json.obj(
-        "processingDate" -> "2022-01-31T09:26:17Z",
-        "formBundleNumber" -> "119000004320",
-        "qtReference" -> "QT123456"
+        "processingDate" -> LocalDateTime.now,
+        "formBundleNumber" -> getRandomFormBundle,
+        "qtReference" -> getRandomQtNumber
       )))
     }
 
