@@ -21,6 +21,7 @@ import play.api.Logging
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.overseaspensiontransferstubs.controllers.actions.CheckHeadersAction
+import uk.gov.hmrc.overseaspensiontransferstubs.services.ResourceService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.time.LocalDateTime
@@ -28,7 +29,8 @@ import scala.util.Random
 
 class HipController @Inject()(
                              cc: ControllerComponents,
-                             checkHeaders: CheckHeadersAction
+                             checkHeaders: CheckHeadersAction,
+                             resourceService: ResourceService
                              ) extends BackendController(cc) with Logging {
 
   def submitTransfer: Action[JsValue] = checkHeaders(parse.json) {
@@ -45,9 +47,14 @@ class HipController @Inject()(
 
 
 
-  def getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String]) = checkHeaders {
+  def getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
     _ =>
-      Ok
+      resourceService.getResource("/getAll", pstr).fold(
+        NotFound("Resource Not Found")
+      )(
+        json =>
+          Ok(json)
+      )
   }
 
   def getSpecific = ???
