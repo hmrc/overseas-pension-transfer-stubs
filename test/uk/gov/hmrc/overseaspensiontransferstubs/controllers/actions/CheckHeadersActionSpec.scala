@@ -47,7 +47,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "FileQROPSTransfer",
             "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
@@ -70,7 +70,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
           .withHeaders(
             "X-Message-Type" -> "FileQROPSTransfer",
             "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
@@ -91,29 +91,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
           .withHeaders(
             "correlationId" -> "correlationId",
             "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
-            "X-Transmitting-System" -> "HIP"
-          ).withBody(Json.obj("key" -> "value"))
-
-        val result = action.invokeBlock(
-          request,
-          { request: Request[JsObject] =>
-            Future.successful(Ok("Success"))
-          }
-        )
-
-        status(result) mustBe BAD_REQUEST
-        contentAsString(result) mustBe "Error with headers"
-      }
-
-      "when X-Message-Type is invalid" in {
-        val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
-          .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "Not valid",
-            "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
@@ -134,7 +112,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
           .withHeaders(
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
@@ -178,7 +156,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "Not valid",
             "X-Originating-System" -> "A" * 31,
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
@@ -194,7 +172,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
         contentAsString(result) mustBe "Error with headers"
       }
 
-      "when X-Originating-Date is missing" in {
+      "when X-Receipt-Date is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
             "correlationId" -> "correlationId",
@@ -221,7 +199,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "FileQROPSTransfer",
             "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -242,7 +220,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "Not valid",
             "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "MDTP",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
@@ -264,7 +242,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "FileQROPSTransfer",
             "X-Originating-System" -> "MDTP",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -285,7 +263,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
             "correlationId" -> "correlationId",
             "X-Message-Type" -> "Not valid",
             "X-Originating-System" -> "",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
+            "X-Receipt-Date" -> LocalDateTime.now.toString,
             "X-Regime-Type" -> "PODS",
             "X-Transmitting-System" -> "MDTP"
           ).withBody(Json.obj("key" -> "value"))

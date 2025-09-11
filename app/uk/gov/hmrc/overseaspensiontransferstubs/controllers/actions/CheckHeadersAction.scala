@@ -40,7 +40,7 @@ class CheckHeadersActionImpl @Inject()(
     val correlationId = headers.get("correlationId")
     val messageType = headers.get("X-Message-Type")
     val originatingSystem = headers.get("X-Originating-System")
-    val receiptData = headers.get("X-Receipt-Date")
+    val receiptDate = headers.get("X-Receipt-Date")
     val regimeType = headers.get("X-Regime-Type")
     val transmittingSystem = headers.get("X-Transmitting-System")
 
@@ -53,7 +53,7 @@ class CheckHeadersActionImpl @Inject()(
     correlationId.isDefined &&
       messageType.isDefined &&
       evaluateHeader(originatingSystem, (str: String) => str == "MDTP") &&
-      receiptData.isDefined &&
+      receiptDate.isDefined &&
       evaluateHeader(regimeType, (str: String) => str == "PODS") &&
       evaluateHeader(transmittingSystem, (str: String) => str == "HIP")
   }

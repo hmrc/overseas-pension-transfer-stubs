@@ -49,7 +49,7 @@ class HipController @Inject()(
 
   def getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
     _ =>
-      resourceService.getResource("/getAll", pstr).fold(
+      resourceService.getResource("getAll", pstr).fold(
         NotFound("getAll resource not found")
       )(
         json =>
