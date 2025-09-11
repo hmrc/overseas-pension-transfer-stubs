@@ -24,7 +24,7 @@ import uk.gov.hmrc.overseaspensiontransferstubs.controllers.actions.CheckHeaders
 import uk.gov.hmrc.overseaspensiontransferstubs.services.ResourceService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.time.LocalDateTime
+import java.time.Instant
 import scala.util.Random
 
 class HipController @Inject()(
@@ -39,7 +39,7 @@ class HipController @Inject()(
       def getRandomQtNumber: String = s"QT${100000 + Random.nextInt(900000)}"
 
       Created(Json.obj("success" -> Json.obj(
-        "processingDate" -> LocalDateTime.now,
+        "processingDate" -> Instant.now,
         "formBundleNumber" -> getRandomFormBundle,
         "qtReference" -> getRandomQtNumber
       )))
@@ -50,13 +50,21 @@ class HipController @Inject()(
   def getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
     _ =>
       resourceService.getResource("/getAll", pstr).fold(
-        NotFound("Resource Not Found")
+        NotFound("getAll resource not found")
       )(
         json =>
           Ok(json)
       )
   }
 
-  def getSpecific = ???
+  def getSpecific(pstr: String): Action[AnyContent] = checkHeaders {
+    _ =>
+      resourceService.getResource("getSpecific", pstr).fold(
+        NotFound("getSpecific resource not found")
+      )(
+        json =>
+          Ok(json)
+      )
+  }
 
 }

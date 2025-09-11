@@ -1,8 +1,7 @@
 # Add all the application routes to the app.routes file
 ->         /                          health.Routes
 
-GET        /store-answers/:id                           uk.gov.hmrc.overseaspensiontransferstubs.controllers.StoreAnswersController.getAnswers(id)
-PUT        /store-answers/:id                           uk.gov.hmrc.overseaspensiontransferstubs.controllers.StoreAnswersController.putAnswers(id)
+GET        /etmp/RESTAdapter/pods/reports/qrops-transfer-overview    uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String])
 
-GET        /RESTAdapter/pods/reports/qrops-transfer-overview    uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String])
-POST       /RESTAdapter/pods/reports/qrops-transfer             uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.submitTransfer
+GET        /etmp/RESTAdapter/pods/reports/qrops-transfer             uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.getSpecific(pstr: String)
+POST       /etmp/RESTAdapter/pods/reports/qrops-transfer             uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.submitTransfer
