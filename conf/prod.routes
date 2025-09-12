@@ -3,5 +3,5 @@
 
 GET        /etmp/RESTAdapter/pods/reports/qrops-transfer-overview    uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.getAll(fromDate: String, toDate: String, pstr: String, qtRef: Option[String])
 
-GET        /etmp/RESTAdapter/pods/reports/qrops-transfer             uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.getSpecific(pstr: String)
+GET        /etmp/RESTAdapter/pods/reports/qrops-transfer             uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.getSpecific(fbNumber: String, pstr: String, qtNumber: Option[String], versionNumber: Option[String])
 POST       /etmp/RESTAdapter/pods/reports/qrops-transfer             uk.gov.hmrc.overseaspensiontransferstubs.controllers.HipController.submitTransfer

@@ -120,12 +120,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
 
-      when(mockResourceService.getResource(meq("getSpecific"), meq("12345678AB")))
+      when(mockResourceService.getResource(meq("getSpecific"), meq("123456789012")))
         .thenReturn(Some(JsString("Success")))
 
       running(application) {
         val request =
-          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB")
+          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?fbNumber=123456789012&pstr=12345678AB")
             .withHeaders(
               "correlationId" -> "correlationId",
               "X-Message-Type" -> "FileQROPSTransfer",
@@ -147,12 +147,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
 
-      when(mockResourceService.getResource(meq("getSpecific"), meq("12345678AB")))
+      when(mockResourceService.getResource(meq("getSpecific"), meq("123456789012")))
         .thenReturn(None)
 
       running(application) {
         val request =
-          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB")
+          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?fbNumber=123456789012&pstr=12345678AB")
             .withHeaders(
               "correlationId" -> "correlationId",
               "X-Message-Type" -> "FileQROPSTransfer",
