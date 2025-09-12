@@ -26,7 +26,7 @@ class ResourceServiceSpec extends AnyFreeSpec with Matchers {
 
   "getResource" - {
     "return Some(JsValue) when json file can be found" in {
-      service.getResource("getAll", "12345678AB") mustBe a[Option[JsValue]]
+      service.getResource("getAll", "24000001IN") mustBe a[Option[JsValue]]
     }
 
     "return None when null is returned" in {
