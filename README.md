@@ -19,6 +19,8 @@ The service runs on port `15602` by default.
 
 ## Test Data Matrix
 
+getAll and getSpecific
+
 The stub uses PSTR for the references for JSON files for returned payloads in order to mimic the data that is required by HIP.
 In order to ensure the correct PSTR is sent the below matrix matches SRN (required for access to frontend), PSA/PSP ID (required for authentication in the frontend service).
 
@@ -32,6 +34,10 @@ In order to ensure the correct PSTR is sent the below matrix matches SRN (requir
 |             |            | A2100032 |          |
 |             |            | A2100041 |          |
 |             |            | A2100042 |          |
+
+submitTransfer
+
+The stub for when a user submits their transfer to HMRC. The stub will return 201 status code and randomly generated QT reference and Form Bundle Number and the current timestamp is returned as the processingDate.
 
 ### Unit tests
 
