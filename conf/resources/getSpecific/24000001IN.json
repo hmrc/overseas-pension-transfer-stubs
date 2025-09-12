@@ -1,21 +1,21 @@
 {
   "success": {
     "processingDate": "2024-12-17T09:30:47.0",
-    "pstr": "12345621AA",
+    "pstr": "24000001IN",
     "qtDetails": {
       "qtVersion": "001",
       "qtStatus": "Compiled",
       "receiptDate": "2024-12-17T09:30:47.0",
-      "qtReference": "QT321467",
+      "qtReference": "QT564321",
       "qtTransferDate": "2024-03-14",
       "qtDigitalStatus": "AB"
     },
     "transferringMember": {
       "memberDetails": {
-        "foreName": "Joey",
-        "lastName": "Banjo",
+        "foreName": "David",
+        "lastName": "Warne",
         "dateOfBirth": "2025-03-14",
-        "nino": "AS156939D",
+        "nino": "AA000000A",
         "principalResAddDetails": {
           "addressDetails": {
             "addressLine1": "1 Hacienda Way",
