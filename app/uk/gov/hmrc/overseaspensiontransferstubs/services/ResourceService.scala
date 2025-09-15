@@ -14,23 +14,16 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.overseaspensiontransferstubs.controllers
+package uk.gov.hmrc.overseaspensiontransferstubs.services
 
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import play.api.http.Status
-import play.api.test.Helpers._
-import play.api.test.{FakeRequest, Helpers}
+import play.api.libs.json.{JsValue, Json}
 
-class MicroserviceHelloWorldControllerSpec extends AnyWordSpec with Matchers {
+class ResourceService {
 
-  private val fakeRequest = FakeRequest("GET", "/")
-  private val controller = new MicroserviceHelloWorldController(Helpers.stubControllerComponents())
-
-  "GET /" should {
-    "return 200" in {
-      val result = controller.hello()(fakeRequest)
-      status(result) shouldBe Status.OK
+  def getResource(path: String, identifier: String): Option[JsValue] = {
+    getClass.getResourceAsStream(s"/resources/$path/$identifier.json") match {
+      case null => None
+      case inputStream => Some(Json.parse(inputStream))
     }
   }
 }

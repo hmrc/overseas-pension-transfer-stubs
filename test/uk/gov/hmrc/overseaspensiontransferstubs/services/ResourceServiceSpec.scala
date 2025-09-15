@@ -14,18 +14,24 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.overseaspensiontransferstubs.controllers
+package uk.gov.hmrc.overseaspensiontransferstubs.services
 
-import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
+import play.api.libs.json.JsValue
 
-@Singleton()
-class MicroserviceHelloWorldController @Inject()(cc: ControllerComponents)
-    extends BackendController(cc) {
+class ResourceServiceSpec extends AnyFreeSpec with Matchers {
 
-  def hello(): Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok("Hello world"))
+  private val service = new ResourceService
+
+  "getResource" - {
+    "return Some(JsValue) when json file can be found" in {
+      service.getResource("getAll", "24000001IN") mustBe a[Option[JsValue]]
+    }
+
+    "return None when null is returned" in {
+      service.getResource("getAll", "notFound") mustBe None
+    }
   }
+
 }
