@@ -58,13 +58,12 @@ class HipController @Inject()(
   }
 
   def getSpecific(
-                   fbNumber: String,
                    pstr: String,
                    qtNumber: Option[String] = None,
                    versionNumber: Option[String] = None
                  ): Action[AnyContent] = checkHeaders {
     _ =>
-      resourceService.getResource("getSpecific", fbNumber).fold(
+      resourceService.getResource("getSpecific", qtNumber.get).fold(
         NotFound("getSpecific resource not found")
       )(
         json =>

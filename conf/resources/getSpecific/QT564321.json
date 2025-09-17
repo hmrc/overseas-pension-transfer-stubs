@@ -52,7 +52,7 @@
       "reasonNoOverseasTransfer": "01",
       "taxableOverseasTransferDetails": {
         "whyTaxableOT": "01",
-        "applicableExclusion": "01",
+        "applicableExclusion": ["01"],
         "amountTaxDeducted": 999999999.99,
         "transferMinusTax": 9999999.99
       },
