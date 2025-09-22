@@ -69,7 +69,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
 
       running(application) {
         val request =
-          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?fromDate=2025-01-01&toDate=2025-01-02&pstr=12345678AB")
+          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
               "correlationId" -> "correlationId",
               "X-Message-Type" -> "FileQROPSTransfer",
@@ -96,7 +96,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
 
       running(application) {
         val request =
-          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?fromDate=2025-01-01&toDate=2025-01-02&pstr=12345678AB")
+          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
               "correlationId" -> "correlationId",
               "X-Message-Type" -> "FileQROPSTransfer",
