@@ -1,11 +1,11 @@
 {
   "success": {
-    "processingDate": "2024-12-17T09:30:47.0",
+    "processingDate": "2024-12-17T09:30:47Z",
     "pstr": "24000001IN",
     "qtDetails": {
       "qtVersion": "001",
       "qtStatus": "Compiled",
-      "receiptDate": "2025-05-09T19:10:12.0",
+      "receiptDate": "2025-05-09T19:10:12Z",
       "qtReference": "QT564321",
       "qtTransferDate": "2025-03-14",
       "qtDigitalStatus": "Compiled"
@@ -49,10 +49,10 @@
       "dateMemberTransferred": "2025-03-14",
       "cashOnlyTransfer": "No",
       "paymentTaxableOverseas": "No",
-      "reasonNoOverseasTransfer": "01",
+      "reasonNoOverseasTransfer": ["01"],
       "taxableOverseasTransferDetails": {
         "whyTaxableOT": "01",
-        "applicableExclusion": "01",
+        "applicableExclusion": ["01"],
         "amountTaxDeducted": 999999999.99,
         "transferMinusTax": 9999999.99
       },
