@@ -59,37 +59,100 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
   }
 
   "getAll" - {
-    "return 200 with Json body when resourceService returns Some(json)" in {
-      val application: Application = GuiceApplicationBuilder().overrides(
-        bind[ResourceService].toInstance(mockResourceService)
-      ).build()
+
+    "return 200 with payload JSON when resourceService returns Some(json) with status=200" in {
+      val application: Application =
+        GuiceApplicationBuilder()
+          .overrides(bind[ResourceService].toInstance(mockResourceService))
+          .build()
+
+      val payload = Json.obj("qropsTransferOverview" -> Json.arr(Json.obj("foo" -> "bar")))
 
       when(mockResourceService.getResource(meq("getAll"), meq("12345678AB")))
-        .thenReturn(Some(JsString("Success")))
+        .thenReturn(Some(Json.obj("status" -> 200, "payload" -> payload)))
 
       running(application) {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
-              "correlationId" -> "correlationId",
-              "X-Message-Type" -> "FileQROPSTransfer",
-              "X-Originating-System" -> "MDTP",
-              "X-Receipt-Date" -> Instant.now.toString,
-              "X-Regime-Type" -> "PODS",
-              "X-Transmitting-System" -> "HIP"
+              "correlationId"          -> "correlationId",
+              "X-Message-Type"         -> "FileQROPSTransfer",
+              "X-Originating-System"   -> "MDTP",
+              "X-Receipt-Date"         -> Instant.now.toString,
+              "X-Regime-Type"          -> "PODS",
+              "X-Transmitting-System"  -> "HIP"
             )
 
         val result = route(application, request).value
 
         status(result) mustBe OK
-        contentAsJson(result) mustBe JsString("Success")
+        contentAsJson(result) mustBe payload
+      }
+    }
+
+    "return 422 with payload JSON when resourceService returns Some(json) with status=422" in {
+      val application: Application =
+        GuiceApplicationBuilder()
+          .overrides(bind[ResourceService].toInstance(mockResourceService))
+          .build()
+
+      val payload = Json.obj("errors" -> Json.obj("code" -> "183", "text" -> "No QT was found in ETMP for the requested details"))
+
+      when(mockResourceService.getResource(meq("getAll"), meq("12345678AB")))
+        .thenReturn(Some(Json.obj("status" -> 422, "payload" -> payload)))
+
+      running(application) {
+        val request =
+          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
+            .withHeaders(
+              "correlationId"          -> "correlationId",
+              "X-Message-Type"         -> "FileQROPSTransfer",
+              "X-Originating-System"   -> "MDTP",
+              "X-Receipt-Date"         -> Instant.now.toString,
+              "X-Regime-Type"          -> "PODS",
+              "X-Transmitting-System"  -> "HIP"
+            )
+
+        val result = route(application, request).value
+
+        status(result) mustBe UNPROCESSABLE_ENTITY
+        contentAsJson(result) mustBe payload
+      }
+    }
+
+    "return 500 when resourceService returns Some(json) with unexpected status" in {
+      val application: Application =
+        GuiceApplicationBuilder()
+          .overrides(bind[ResourceService].toInstance(mockResourceService))
+          .build()
+
+      when(mockResourceService.getResource(meq("getAll"), meq("12345678AB")))
+        .thenReturn(Some(Json.obj("status" -> 503, "payload" -> Json.obj("ignored" -> true))))
+
+      running(application) {
+        val request =
+          FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
+            .withHeaders(
+              "correlationId"          -> "correlationId",
+              "X-Message-Type"         -> "FileQROPSTransfer",
+              "X-Originating-System"   -> "MDTP",
+              "X-Receipt-Date"         -> Instant.now.toString,
+              "X-Regime-Type"          -> "PODS",
+              "X-Transmitting-System"  -> "HIP"
+            )
+
+        val result = route(application, request).value
+
+        status(result) mustBe INTERNAL_SERVER_ERROR
+        contentAsString(result) mustBe ""
       }
     }
 
     "return 404 with String body when resourceService returns None" in {
-      val application: Application = GuiceApplicationBuilder().overrides(
-        bind[ResourceService].toInstance(mockResourceService)
-      ).build()
+      val application: Application =
+        GuiceApplicationBuilder()
+          .overrides(bind[ResourceService].toInstance(mockResourceService))
+          .build()
 
       when(mockResourceService.getResource(meq("getAll"), meq("12345678AB")))
         .thenReturn(None)
@@ -98,12 +161,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
-              "correlationId" -> "correlationId",
-              "X-Message-Type" -> "FileQROPSTransfer",
-              "X-Originating-System" -> "MDTP",
-              "X-Receipt-Date" -> Instant.now.toString,
-              "X-Regime-Type" -> "PODS",
-              "X-Transmitting-System" -> "HIP"
+              "correlationId"          -> "correlationId",
+              "X-Message-Type"         -> "FileQROPSTransfer",
+              "X-Originating-System"   -> "MDTP",
+              "X-Receipt-Date"         -> Instant.now.toString,
+              "X-Regime-Type"          -> "PODS",
+              "X-Transmitting-System"  -> "HIP"
             )
 
         val result = route(application, request).value
@@ -113,6 +176,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       }
     }
   }
+
 
   "getSpecific" - {
     "return 200 with Json body when resourceService returns Some(json)" in {

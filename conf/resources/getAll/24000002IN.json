@@ -1,0 +1,10 @@
+{
+  "status": 422,
+  "payload": {
+    "errors": {
+      "processingDate": "2022-01-31T09:26:17Z",
+      "code": "183",
+      "text": "No QT was found in ETMP for the requested details"
+    }
+  }
+}
