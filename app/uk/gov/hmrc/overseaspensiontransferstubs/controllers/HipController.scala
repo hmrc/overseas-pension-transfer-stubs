@@ -52,8 +52,16 @@ class HipController @Inject()(
       resourceService.getResource("getAll", pstr).fold(
         NotFound("getAll resource not found")
       )(
-        json =>
-          Ok(json)
+        json => {
+          val status = (json \ "status").as[Int]
+          val payload = (json \ "payload").toOption.getOrElse(Json.obj())
+
+          status match {
+            case 200 => Ok(payload)
+            case 422 => UnprocessableEntity(payload)
+            case _   => InternalServerError
+          }
+        }
       )
   }
 
