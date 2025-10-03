@@ -43,11 +43,11 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       running(application) {
         val request: FakeRequest[JsObject] = FakeRequest(POST, "/etmp/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> Instant.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> Instant.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -75,12 +75,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
-              "correlationId"          -> "correlationId",
-              "X-Message-Type"         -> "FileQROPSTransfer",
-              "X-Originating-System"   -> "MDTP",
-              "X-Receipt-Date"         -> Instant.now.toString,
-              "X-Regime-Type"          -> "PODS",
-              "X-Transmitting-System"  -> "HIP"
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
+              "X-Transmitting-System" -> "HIP"
             )
 
         val result = route(application, request).value
@@ -105,12 +105,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
-              "correlationId"          -> "correlationId",
-              "X-Message-Type"         -> "FileQROPSTransfer",
-              "X-Originating-System"   -> "MDTP",
-              "X-Receipt-Date"         -> Instant.now.toString,
-              "X-Regime-Type"          -> "PODS",
-              "X-Transmitting-System"  -> "HIP"
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
+              "X-Transmitting-System" -> "HIP"
             )
 
         val result = route(application, request).value
@@ -133,12 +133,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
-              "correlationId"          -> "correlationId",
-              "X-Message-Type"         -> "FileQROPSTransfer",
-              "X-Originating-System"   -> "MDTP",
-              "X-Receipt-Date"         -> Instant.now.toString,
-              "X-Regime-Type"          -> "PODS",
-              "X-Transmitting-System"  -> "HIP"
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
+              "X-Transmitting-System" -> "HIP"
             )
 
         val result = route(application, request).value
@@ -161,12 +161,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer-overview?dateFrom=2025-01-01&dateTo=2025-01-02&pstr=12345678AB")
             .withHeaders(
-              "correlationId"          -> "correlationId",
-              "X-Message-Type"         -> "FileQROPSTransfer",
-              "X-Originating-System"   -> "MDTP",
-              "X-Receipt-Date"         -> Instant.now.toString,
-              "X-Regime-Type"          -> "PODS",
-              "X-Transmitting-System"  -> "HIP"
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
+              "X-Transmitting-System" -> "HIP"
             )
 
         val result = route(application, request).value
@@ -176,7 +176,6 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       }
     }
   }
-
 
   "getSpecific" - {
     "return 200 with Json body when resourceService returns Some(json)" in {
@@ -191,11 +190,11 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB&qtNumber=QT564321&versionNumber=001")
             .withHeaders(
-              "correlationId" -> "correlationId",
-              "X-Message-Type" -> "FileQROPSTransfer",
-              "X-Originating-System" -> "MDTP",
-              "X-Receipt-Date" -> Instant.now.toString,
-              "X-Regime-Type" -> "PODS",
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
               "X-Transmitting-System" -> "HIP"
             )
 
@@ -218,11 +217,11 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB&qtNumber=QT564321&versionNumber=001")
             .withHeaders(
-              "correlationId" -> "correlationId",
-              "X-Message-Type" -> "FileQROPSTransfer",
-              "X-Originating-System" -> "MDTP",
-              "X-Receipt-Date" -> Instant.now.toString,
-              "X-Regime-Type" -> "PODS",
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
               "X-Transmitting-System" -> "HIP"
             )
 

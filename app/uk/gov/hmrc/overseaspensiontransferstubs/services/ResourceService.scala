@@ -22,7 +22,7 @@ class ResourceService {
 
   def getResource(path: String, identifier: String): Option[JsValue] = {
     getClass.getResourceAsStream(s"/resources/$path/$identifier.json") match {
-      case null => None
+      case null        => None
       case inputStream => Some(Json.parse(inputStream))
     }
   }
