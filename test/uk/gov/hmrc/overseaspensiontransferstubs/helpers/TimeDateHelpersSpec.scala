@@ -51,7 +51,6 @@ final class TimeDateHelpersSpec extends AnyFreeSpec with Matchers with TimeDateH
       x.isBefore(start) mustBe false
     }
 
-
     "must return only instants from the recent window when recentWeight = 1.0" in {
       val from = LocalDate.of(2024, 3, 1)
       val to   = LocalDate.of(2024, 4, 30)

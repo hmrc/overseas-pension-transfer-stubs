@@ -70,7 +70,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         Json.obj("fbNumber" -> "123", "qtReference" -> "QT1"),
         Json.obj("fbNumber" -> "456", "qtReference" -> "QT2")
       )
-      val payload = Json.obj(
+      val payload       = Json.obj(
         "success" -> Json.obj(
           "qropsTransferOverview" -> originalItems
         )
