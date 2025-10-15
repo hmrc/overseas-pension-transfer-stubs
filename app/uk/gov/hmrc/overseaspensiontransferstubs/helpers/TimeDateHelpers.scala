@@ -36,9 +36,8 @@ trait TimeDateHelpers {
   /** Generates a recency-biased submission timestamp.
     *
     * Splits the overall range into two half-open windows:
-    *   - Older: [from,  (now - recentBiasDays)]
-    *   - Recent: [recentBiasDays, now]
-    * And returns a weighted amount of instants from each range.
+    *   - Older: [from, (now - recentBiasDays)]
+    *   - Recent: [recentBiasDays, now] And returns a weighted amount of instants from each range.
     * @param seedStr
     *   String used to seed the RNG, this keep the timestamps deterministic between calls
     * @param from
