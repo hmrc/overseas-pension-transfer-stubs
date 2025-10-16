@@ -86,7 +86,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       }
     }
 
-    "return 404 with String body when resourceService returns None" in {
+    "return 404 with empty Array when resourceService returns None" in {
       val application: Application = GuiceApplicationBuilder().overrides(
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
@@ -109,7 +109,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         val result = route(application, request).value
 
         status(result) mustBe NOT_FOUND
-        contentAsString(result) mustBe "getAll resource not found"
+        contentAsString(result) mustBe """{"success":{"qropsTransferOverview":[]}}"""
       }
     }
   }

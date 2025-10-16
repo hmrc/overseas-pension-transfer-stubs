@@ -50,7 +50,13 @@ class HipController @Inject()(
   def getAll(dateFrom: String, dateTo: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
     _ =>
       resourceService.getResource("getAll", pstr).fold(
-        NotFound("getAll resource not found")
+        NotFound(Json.parse(
+          """{
+            | "success": {
+            |    "qropsTransferOverview": []
+            | }
+            |}
+            |""".stripMargin))
       )(
         json =>
           Ok(json)
