@@ -50,13 +50,11 @@ class HipController @Inject()(
   def getAll(dateFrom: String, dateTo: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
     _ =>
       resourceService.getResource("getAll", pstr).fold(
-        NotFound(Json.parse(
-          """{
-            | "success": {
-            |    "qropsTransferOverview": []
-            | }
-            |}
-            |""".stripMargin))
+        UnprocessableEntity(Json.obj("errors" -> Json.obj(
+          "processingDate" -> "2025-10-17T15:24:15.128497Z", //Aware this isn't dynamic - date is irrelevant in service and simplifies unit test
+          "code" -> "183",
+          "text" -> "Not Found"
+        )))
       )(
         json =>
           Ok(json)

@@ -108,8 +108,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
 
         val result = route(application, request).value
 
-        status(result) mustBe NOT_FOUND
-        contentAsString(result) mustBe """{"success":{"qropsTransferOverview":[]}}"""
+        status(result) mustBe UNPROCESSABLE_ENTITY
+        contentAsJson(result) mustBe Json.obj("errors" -> Json.obj(
+          "processingDate" -> "2025-10-17T15:24:15.128497Z",
+          "code" -> "183",
+          "text" -> "Not Found"
+        ))
       }
     }
   }
