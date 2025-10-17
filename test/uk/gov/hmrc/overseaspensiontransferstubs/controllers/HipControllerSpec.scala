@@ -201,11 +201,10 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       }
     }
 
-    "return 404 with String body when resourceService returns None" in {
-      val application: Application =
-        GuiceApplicationBuilder()
-          .overrides(bind[ResourceService].toInstance(mockResourceService))
-          .build()
+    "return 422 when resourceService returns None" in {
+      val application: Application = GuiceApplicationBuilder().overrides(
+        bind[ResourceService].toInstance(mockResourceService)
+      ).build()
 
       when(mockResourceService.getResource(meq("getAll"), meq("12345678AB")))
         .thenReturn(None)
@@ -224,8 +223,12 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
 
         val result = route(application, request).value
 
-        status(result) mustBe NOT_FOUND
-        contentAsString(result) mustBe "getAll resource not found"
+        status(result) mustBe UNPROCESSABLE_ENTITY
+        contentAsJson(result) mustBe Json.obj("errors" -> Json.obj(
+          "processingDate" -> "2025-10-17T15:24:15.128497Z",
+          "code"           -> "183",
+          "text"           -> "Not Found"
+        ))
       }
     }
   }

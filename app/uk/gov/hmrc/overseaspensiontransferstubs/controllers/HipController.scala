@@ -18,16 +18,14 @@ package uk.gov.hmrc.overseaspensiontransferstubs.controllers
 
 import com.google.inject.Inject
 import play.api.Logging
-import play.api.libs.json.{__, JsArray, JsObject, JsString, JsValue, Json}
+import play.api.libs.json._
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.overseaspensiontransferstubs.controllers.actions.CheckHeadersAction
 import uk.gov.hmrc.overseaspensiontransferstubs.helpers.TimeDateHelpers
 import uk.gov.hmrc.overseaspensiontransferstubs.services.ResourceService
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
-import java.time.{Instant, LocalDate, OffsetDateTime, ZoneOffset}
-import java.time.format.{DateTimeFormatter, DateTimeParseException}
-import java.util.concurrent.ThreadLocalRandom
+import java.time.Instant
 import scala.util.Random
 
 class HipController @Inject() (
@@ -51,7 +49,11 @@ class HipController @Inject() (
   def getAll(dateFrom: String, dateTo: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
     _ =>
       resourceService.getResource("getAll", pstr).fold(
-        NotFound("getAll resource not found")
+        UnprocessableEntity(Json.obj("errors" -> Json.obj(
+          "processingDate" -> "2025-10-17T15:24:15.128497Z", // Aware this isn't dynamic - date is irrelevant in service and simplifies unit test
+          "code"           -> "183",
+          "text"           -> "Not Found"
+        )))
       )(json => {
         val status  = (json \ "status").as[Int]
         val payload = (json \ "payload").toOption.getOrElse(Json.obj())
