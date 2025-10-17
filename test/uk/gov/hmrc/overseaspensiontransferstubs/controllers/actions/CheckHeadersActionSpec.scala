@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.overseaspensiontransferstubs.controllers.actions
 
-
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import play.api.http.Status.{BAD_REQUEST, OK}
@@ -25,7 +24,7 @@ import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.Results.Ok
 import play.api.mvc.{BodyParsers, Request}
 import play.api.test.FakeRequest
-import play.api.test.Helpers.{POST, contentAsString, defaultAwaitTimeout, status}
+import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, status, POST}
 
 import java.time.LocalDateTime
 import scala.concurrent.{ExecutionContext, Future}
@@ -44,11 +43,11 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "all headers pass validation" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -68,10 +67,10 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when correlationId is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -89,10 +88,10 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Message-Type is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -110,10 +109,10 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Originating-System is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -131,11 +130,11 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Originating-System length is 0" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "Not valid",
-            "X-Originating-System" -> "",
-            "X-Originating-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "Not valid",
+            "X-Originating-System"  -> "",
+            "X-Originating-Date"    -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -153,11 +152,11 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Originating-System length is > 30" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "Not valid",
-            "X-Originating-System" -> "A" * 31,
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "Not valid",
+            "X-Originating-System"  -> "A" * 31,
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -175,10 +174,10 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Receipt-Date is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Originating-System" -> "MDTP",
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Originating-System"  -> "MDTP",
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -196,10 +195,10 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Regime-Type is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "FileQROPSTransfer",
-            "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -217,11 +216,11 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Regime-Type is invalid" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "Not valid",
-            "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "MDTP",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "Not valid",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "MDTP",
             "X-Transmitting-System" -> "HIP"
           ).withBody(Json.obj("key" -> "value"))
 
@@ -239,11 +238,11 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Transmitting-System is missing" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "FileQROPSTransfer",
+            "correlationId"        -> "correlationId",
+            "X-Message-Type"       -> "FileQROPSTransfer",
             "X-Originating-System" -> "MDTP",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS"
+            "X-Receipt-Date"       -> LocalDateTime.now.toString,
+            "X-Regime-Type"        -> "PODS"
           ).withBody(Json.obj("key" -> "value"))
 
         val result = action.invokeBlock(
@@ -260,11 +259,11 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
       "when X-Transmitting-System length is invalid" in {
         val request = FakeRequest(POST, "/RESTAdapter/pods/reports/qrops-transfer")
           .withHeaders(
-            "correlationId" -> "correlationId",
-            "X-Message-Type" -> "Not valid",
-            "X-Originating-System" -> "",
-            "X-Receipt-Date" -> LocalDateTime.now.toString,
-            "X-Regime-Type" -> "PODS",
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "Not valid",
+            "X-Originating-System"  -> "",
+            "X-Receipt-Date"        -> LocalDateTime.now.toString,
+            "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "MDTP"
           ).withBody(Json.obj("key" -> "value"))
 

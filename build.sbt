@@ -10,10 +10,12 @@ lazy val microservice = Project("overseas-pension-transfer-stubs", file("."))
     // https://www.scala-lang.org/2021/01/12/configuring-and-suppressing-warnings.html
     // suppress warnings in generated routes files
     scalacOptions += "-Wconf:src=routes/.*:s",
+    scalafmtOnCompile := true
   )
   .settings(resolvers += Resolver.jcenterRepo)
   .settings(CodeCoverageSettings.settings: _*)
   .settings(PlayKeys.playDefaultPort := 15602)
+
 
 lazy val it = project
   .enablePlugins(PlayScala)
