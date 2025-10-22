@@ -1,0 +1,125 @@
+{
+  "success": {
+    "processingDate": "2025-07-23T09:30:47Z",
+    "pstr": "24000001IN",
+    "qtDetails": {
+      "qtVersion": "001",
+      "qtStatus": "Submitted",
+      "receiptDate": "2025-07-22T12:00:00Z",
+      "qtReference": "QT564348",
+      "qtTransferDate": "2025-07-22",
+      "qtDigitalStatus": "Submitted"
+    },
+    "transferringMember": {
+      "memberDetails": {
+        "foreName": "Carol",
+        "lastName": "Collingwood",
+        "dateOfBirth": "1979-04-12",
+        "nino": "AA000020A",
+        "principalResAddDetails": {
+          "addressDetails": {
+            "addressLine1": "1 Hacienda Way",
+            "addressLine2": "Madrid",
+            "addressLine3": "01055",
+            "ukPostCode": "A00AA",
+            "country": "AD"
+          },
+          "poBoxNumber": "AB"
+        },
+        "memberResidencyDetails": {
+          "memUkResident": "No",
+          "memEverUkResident": "Yes",
+          "lastPrincipalAddDetails": {
+            "addressDetails": {
+              "addressLine1": "1 Hacienda Way",
+              "addressLine2": "Madrid",
+              "addressLine3": "01055",
+              "addressLine4": "01 D",
+              "ukPostCode": "A00AA"
+            },
+            "dateMemberLeftUk": "2015-06-01"
+          }
+        }
+      }
+    },
+    "transferDetails": {
+      "recordVersion": "001",
+      "transferAmount": 99999.99,
+      "allowanceBeforeTransfer": 9999999.99,
+      "dateMemberTransferred": "2025-07-22",
+      "cashOnlyTransfer": "No",
+      "paymentTaxableOverseas": "No",
+      "reasonNoOverseasTransfer": ["01"],
+      "taxableOverseasTransferDetails": {
+        "whyTaxableOT": "01",
+        "applicableExclusion": ["01"],
+        "amountTaxDeducted": 999999999.99,
+        "transferMinusTax": 9999999.99
+      },
+      "typeOfAssets": {
+        "recordVersion": "001",
+        "cashAssets": "Yes",
+        "cashValue": 999999999.99,
+        "unquotedShareAssets": "Yes",
+        "moreUnquoted": "No",
+        "quotedShareAssets": "No",
+        "moreQuoted": "No",
+        "propertyAsset": "No",
+        "moreProp": "No",
+        "otherAsset": "No",
+        "moreAsset": "No",
+        "unquotedShares": [
+          {
+            "recordVersion": "001",
+            "unquotedValue": 999999999.99,
+            "unquotedShareTotal": 0,
+            "unquotedCompany": "John Pvt Ltd",
+            "unquotedClass": "DC"
+          }
+        ]
+      }
+    },
+    "aboutReceivingQROPS": {
+      "qropsFullName": "Mendes International Pension",
+      "qropsRef": "QROPS654338",
+      "receivingQropsAddress": {
+        "addressLine1": "1 Hacienda Way",
+        "addressLine2": "Madrid",
+        "addressLine3": "01055",
+        "addressLine4": "01 D",
+        "addressLine5": "AT POST",
+        "country": "AD"
+      },
+      "receivingQropsEstablishedDetails": {
+        "qropsEstablished": "AD",
+        "qropsEstablishedOther": "AB"
+      },
+      "qropsSchemeManagerType": {
+        "schemeManagerType": "01",
+        "schemeManagerAddress": {
+          "addressLine1": "1 Hacienda Way",
+          "addressLine2": "Madrid",
+          "addressLine3": "01055",
+          "addressLine4": "01 D",
+          "addressLine5": "AT POST",
+          "country": "AD"
+        },
+        "schemeManagerEmail": "jdoe@example.com",
+        "schemeManagerPhone": "912357894",
+        "qropsIndividual": {
+          "individualForename": "David",
+          "individualSurname": "John"
+        }
+      }
+    },
+    "qtDeclaration": {
+      "submittedBy": "PSA",
+      "submitterId": "00001234",
+      "psaId": "A0000000"
+    },
+    "psaDeclaration": {
+      "declaration1": true,
+      "declaration2": true
+    }
+  }
+}
