@@ -1,0 +1,21 @@
+{
+  "status": 200,
+  "payload": {
+    "success": {
+      "qropsTransferOverview": [
+        {
+          "fbNumber": "123456000023",
+          "qtReference": "QT564319",
+          "qtVersion": "001",
+          "qtStatus": "Submitted",
+          "qtDigitalStatus": "Submitted",
+          "nino": "AA100000A",
+          "firstName": "Sally",
+          "lastName": "Scott",
+          "qtDate": "2025-03-14",
+          "qropsReference": "QROPS654321"
+        }
+      ]
+    }
+  }
+}
