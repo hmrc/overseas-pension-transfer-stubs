@@ -24,16 +24,18 @@ getAll and getSpecific
 The stub uses PSTR for the references for JSON files for returned payloads in order to mimic the data that is required by HIP.
 In order to ensure the correct PSTR is sent the below matrix matches SRN (required for access to frontend), PSA/PSP ID (required for authentication in the frontend service).
 
-| SRN         | PSTR       | PSAID    | PSPID    |
-|-------------|------------|----------|----------|
-| S2400000001 | 24000001IN | A2100005 | 21000005 |
-|             |            | A2100007 | 21000007 |
-|             |            | A2100011 |          |
-|             |            | A2100021 |          |
-|             |            | A2100022 |          |
-|             |            | A2100032 |          |
-|             |            | A2100041 |          |
-|             |            | A2100042 |          |
+| SRN          | PSTR        | PSAID     | PSPID     |
+|--------------|-------------|-----------|-----------|
+| S2400000001  | 24000001IN  | A2100005  | 21000005  |
+|              |             | A2100007  | 21000007  |
+|              |             | A2100011  |           |
+|              |             | A2100021  |           |
+|              |             | A2100022  |           |
+|              |             | A2100032  |           |
+|              |             | A2100041  |           |
+|              |             | A2100042  |           |
+|              |             |           |           |
+| S2400000015  | 24000015IN  | A2100005  | 21000005  |
 
 submitTransfer
 
