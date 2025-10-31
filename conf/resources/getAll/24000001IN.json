@@ -8,7 +8,6 @@
           "qtReference": "QT564321",
           "qtVersion": "001",
           "qtStatus": "Compiled",
-          "qtDigitalStatus": "Complied",
           "nino": "AA000000A",
           "firstName": "David",
           "lastName": "Warne",
@@ -108,8 +107,7 @@
           "nino": "AA000009A",
           "firstName": "Rupert",
           "lastName": "Rutherford",
-          "qtDate": "2025-03-14",
-          "qropsReference": "QROPS654328"
+          "qtDate": "2025-03-14"
         },
         {
           "fbNumber": "123456000031",
@@ -117,7 +115,6 @@
           "qtVersion": "005",
           "qtStatus": "Submitted",
           "qtDigitalStatus": "Submitted",
-          "nino": "AA000010A",
           "firstName": "Tabitha",
           "lastName": "Trott",
           "qtDate": "2024-12-31",
