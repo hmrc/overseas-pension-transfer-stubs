@@ -34,8 +34,9 @@ class HipController @Inject() (
     resourceService: ResourceService
   ) extends BackendController(cc) with TimeDateHelpers with Logging {
 
-  def submitTransfer(userId: String): Action[JsValue] = checkHeaders(parse.json) {
-    _ =>
+  def submitTransfer: Action[JsValue] = checkHeaders(parse.json) {
+    request =>
+      val userId = (request.body \ "qtDeclaration" \ "submitterId").as[String]
       if (userId == "A2100060") {
         InternalServerError(Json.obj(
           "origin"   -> "HoD",
