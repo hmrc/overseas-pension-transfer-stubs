@@ -37,7 +37,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
   private val mockResourceService: ResourceService = mock[ResourceService]
 
   "submitTransfer" - {
-    "return Created with Json body" in {
+    "return Created with Json body for psa id A2100001" in {
       val application: Application = GuiceApplicationBuilder().build()
 
       running(application) {
@@ -49,11 +49,30 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
             "X-Receipt-Date"        -> Instant.now.toString,
             "X-Regime-Type"         -> "PODS",
             "X-Transmitting-System" -> "HIP"
-          ).withBody(Json.obj("key" -> "value"))
+          ).withBody(Json.obj("qtDeclaration" -> Json.obj("submitterId" -> "A2100001")))
 
         val result = route(application, request).value
 
         status(result) mustBe CREATED
+      }
+    }
+    "return internal server error for psaID A2100060" in {
+      val application: Application = GuiceApplicationBuilder().build()
+
+      running(application) {
+        val request: FakeRequest[JsObject] = FakeRequest(POST, "/etmp/RESTAdapter/pods/reports/qrops-transfer")
+          .withHeaders(
+            "correlationId"         -> "correlationId",
+            "X-Message-Type"        -> "FileQROPSTransfer",
+            "X-Originating-System"  -> "MDTP",
+            "X-Receipt-Date"        -> Instant.now.toString,
+            "X-Regime-Type"         -> "PODS",
+            "X-Transmitting-System" -> "HIP"
+          ).withBody(Json.obj("qtDeclaration" -> Json.obj("submitterId" -> "A2100060")))
+
+        val result = route(application, request).value
+
+        status(result) mustBe INTERNAL_SERVER_ERROR
       }
     }
   }
