@@ -35,7 +35,7 @@ class CheckHeadersActionImpl @Inject() (
     else Future.successful(BadRequest("Error with headers"))
 
   private def validateHeaders(headers: Headers): Boolean = {
-    val correlationId      = headers.get("correlationId")
+    val correlationId      = headers.get("correlationid")
     val messageType        = headers.get("X-Message-Type")
     val originatingSystem  = headers.get("X-Originating-System")
     val receiptDate        = headers.get("X-Receipt-Date")
