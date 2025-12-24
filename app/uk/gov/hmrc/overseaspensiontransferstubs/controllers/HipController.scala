@@ -27,6 +27,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import java.time.Instant
 import scala.util.Random
+import scala.util.matching.Regex
 
 class HipController @Inject() (
     cc: ControllerComponents,
@@ -50,7 +51,8 @@ class HipController @Inject() (
         ))
       } else {
         def getRandomFormBundle: String = Random.nextLong(999999999999L).toString
-        def getRandomQtNumber: String   = s"QT${100000 + Random.nextInt(900000)}"
+
+        def getRandomQtNumber: String = s"QT${100000 + Random.nextInt(900000)}"
 
         Created(Json.obj("success" -> Json.obj(
           "processingDate"   -> Instant.now,
@@ -108,7 +110,14 @@ class HipController @Inject() (
       versionNumber: Option[String] = None
     ): Action[AnyContent] = checkHeaders {
     _ =>
-      resourceService.getResource("getSpecific", qtNumber.get).fold(
+      val qtRegex: Regex = "QT5643(1[9]|2[0-9]|3[0-9]|4[0-8]|5[0-2])".r
+
+      val qtNumberOrDefault = qtNumber match {
+        case Some(qtRegex()) => qtNumber.get
+        case _               => resourceService.DEFAULT_REFERENCE
+      }
+
+      resourceService.getResource("getSpecific", qtNumberOrDefault).fold(
         NotFound("getSpecific resource not found")
       )(json =>
         Ok(json)
