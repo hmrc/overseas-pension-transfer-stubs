@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.overseaspensiontransferstubs.controllers
 
-import org.mockito.ArgumentMatchers.{eq => meq}
+import org.mockito.ArgumentMatchers.{any, eq => meq}
 import org.mockito.Mockito.when
 import org.scalatest.OptionValues.convertOptionToValuable
 import org.scalatest.freespec.AnyFreeSpec
@@ -258,7 +258,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
 
-      when(mockResourceService.getResource(meq("getSpecific"), meq("QT564321")))
+      when(mockResourceService.getResource(meq("getSpecific"), any()))
         .thenReturn(Some(JsString("Success")))
 
       running(application) {
@@ -285,7 +285,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
 
-      when(mockResourceService.getResource(meq("getSpecific"), meq("QT564321")))
+      when(mockResourceService.getResource(meq("getSpecific"), any()))
         .thenReturn(None)
 
       running(application) {
