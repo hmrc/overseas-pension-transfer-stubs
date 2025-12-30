@@ -162,8 +162,15 @@ class HipController @Inject() (
   private def setNino(payload: JsValue): JsValue = {
     payload match {
       case obj: JsObject =>
-        if ((obj \ "nino").toOption.isDefined) {
-          obj + ("nino" -> JsString(generateNino()))
+        val ninoPath = __ \ "success" \ "transferringMember" \ "memberDetails" \ "nino"
+
+        if ((obj \ "success" \ "transferringMember" \ "memberDetails" \ "nino").toOption.isDefined) {
+          obj.transform(
+            ninoPath.json.update(__.read[JsString].map(_ => JsString(generateNino())))
+          ) match {
+            case JsSuccess(updated, _) => updated
+            case JsError(_)            => obj
+          }
         } else {
           obj
         }
