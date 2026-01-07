@@ -258,7 +258,7 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
 
-      when(mockResourceService.getResource(meq("getSpecific"), any()))
+      when(mockResourceService.getResource(meq("getSpecific"), meq("QT564321")))
         .thenReturn(Some(JsString("Success")))
 
       running(application) {
@@ -280,12 +280,39 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       }
     }
 
+    "return 200 with Default Json body for new qtNumber without stub" in {
+      val application: Application = GuiceApplicationBuilder().overrides(
+        bind[ResourceService].toInstance(mockResourceService)
+      ).build()
+      when(mockResourceService.DEFAULT_REFERENCE).thenReturn("QT564321")
+      when(mockResourceService.getResource(meq("getSpecific"), meq("QT564321")))
+        .thenReturn(Some(JsString("Success")))
+
+      running(application) {
+        val request =
+          FakeRequest(GET, s"/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB&qtNumber=QT564111&versionNumber=001")
+            .withHeaders(
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
+              "X-Transmitting-System" -> "HIP"
+            )
+
+        val result = route(application, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe JsString("Success")
+      }
+    }
+
     "return 404 with String body when resourceService returns None" in {
       val application: Application = GuiceApplicationBuilder().overrides(
         bind[ResourceService].toInstance(mockResourceService)
       ).build()
 
-      when(mockResourceService.getResource(meq("getSpecific"), any()))
+      when(mockResourceService.getResource(meq("getSpecific"), meq("QT564321")))
         .thenReturn(None)
 
       running(application) {

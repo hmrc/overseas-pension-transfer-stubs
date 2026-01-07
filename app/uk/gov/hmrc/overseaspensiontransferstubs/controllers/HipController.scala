@@ -110,7 +110,7 @@ class HipController @Inject() (
       versionNumber: Option[String] = None
     ): Action[AnyContent] = checkHeaders {
     _ =>
-      val qtRegex: Regex = "QT5643(1[9]|2[0-9]|3[0-9]|4[0-8]|5[0-2])".r
+      val qtRegex: Regex = "QT5643[1-5][0-9]".r
 
       val qtNumberOrDefault = qtNumber match {
         case Some(qtRegex()) => qtNumber.get
