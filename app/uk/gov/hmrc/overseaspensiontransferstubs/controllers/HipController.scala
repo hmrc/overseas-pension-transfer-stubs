@@ -72,8 +72,8 @@ class HipController @Inject() (
         val status  = (json \ "status").as[Int]
         val payload = (json \ "payload").toOption.getOrElse(Json.obj())
 
-        val subsWithRandomDates = setAllSubmissionDates(payload, pstr)
-        val withRandomNinos     = setAllNinos(subsWithRandomDates)
+        val stubsWithRandomDates = setAllSubmissionDates(payload, pstr)
+        val withRandomNinos      = setAllNinos(stubsWithRandomDates)
 
         status match {
           case 200 => Ok(withRandomNinos)
