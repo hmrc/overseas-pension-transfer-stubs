@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.overseaspensiontransferstubs.controllers
 
-import org.mockito.ArgumentMatchers.{eq => meq}
+import org.mockito.ArgumentMatchers.{any, eq => meq}
 import org.mockito.Mockito.when
 import org.scalatest.OptionValues.convertOptionToValuable
 import org.scalatest.freespec.AnyFreeSpec
@@ -264,6 +264,33 @@ class HipControllerSpec extends AnyFreeSpec with Matchers {
       running(application) {
         val request =
           FakeRequest(GET, "/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB&qtNumber=QT564321&versionNumber=001")
+            .withHeaders(
+              "correlationId"         -> "correlationId",
+              "X-Message-Type"        -> "FileQROPSTransfer",
+              "X-Originating-System"  -> "MDTP",
+              "X-Receipt-Date"        -> Instant.now.toString,
+              "X-Regime-Type"         -> "PODS",
+              "X-Transmitting-System" -> "HIP"
+            )
+
+        val result = route(application, request).value
+
+        status(result) mustBe OK
+        contentAsJson(result) mustBe JsString("Success")
+      }
+    }
+
+    "return 200 with Default Json body for new qtNumber without stub" in {
+      val application: Application = GuiceApplicationBuilder().overrides(
+        bind[ResourceService].toInstance(mockResourceService)
+      ).build()
+      when(mockResourceService.DEFAULT_REFERENCE).thenReturn("QT564321")
+      when(mockResourceService.getResource(meq("getSpecific"), meq("QT564321")))
+        .thenReturn(Some(JsString("Success")))
+
+      running(application) {
+        val request =
+          FakeRequest(GET, s"/etmp/RESTAdapter/pods/reports/qrops-transfer?pstr=12345678AB&qtNumber=QT564111&versionNumber=001")
             .withHeaders(
               "correlationId"         -> "correlationId",
               "X-Message-Type"        -> "FileQROPSTransfer",

@@ -20,6 +20,8 @@ import play.api.libs.json.{JsValue, Json}
 
 class ResourceService {
 
+  val DEFAULT_REFERENCE: String = "QT564339"
+
   def getResource(path: String, identifier: String): Option[JsValue] = {
     getClass.getResourceAsStream(s"/resources/$path/$identifier.json") match {
       case null        => None
