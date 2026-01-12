@@ -42,41 +42,31 @@
         }
       }
     },
-    "transferDetails": {
-      "recordVersion": "001",
-      "transferAmount": 99999.99,
-      "allowanceBeforeTransfer": 9999999.99,
-      "dateMemberTransferred": "2025-07-22",
-      "cashOnlyTransfer": "No",
-      "paymentTaxableOverseas": "No",
-      "reasonNoOverseasTransfer": ["01"],
-      "taxableOverseasTransferDetails": {
-        "whyTaxableOT": "01",
-        "applicableExclusion": ["01"],
-        "amountTaxDeducted": 999999999.99,
-        "transferMinusTax": 9999999.99
+    "transferDetails" : {
+      "transferAmount" : 0.02,
+      "allowanceBeforeTransfer" : 9999999.99,
+      "dateMemberTransferred" : "2025-07-22",
+      "cashOnlyTransfer" : "Yes",
+      "paymentTaxableOverseas" : "No",
+      "reasonNoOverseasTransfer" : [ "01" ],
+      "taxableOverseasTransferDetails" : {
+        "whyTaxableOT" : "01",
+        "applicableExclusion" : [ "01" ],
+        "amountTaxDeducted" : 999999999.99,
+        "transferMinusTax" : 0.02
       },
-      "typeOfAssets": {
-        "recordVersion": "001",
-        "cashAssets": "Yes",
-        "cashValue": 999999999.99,
-        "unquotedShareAssets": "Yes",
-        "moreUnquoted": "No",
-        "quotedShareAssets": "No",
-        "moreQuoted": "No",
-        "propertyAsset": "No",
-        "moreProp": "No",
-        "otherAsset": "No",
-        "moreAsset": "No",
-        "unquotedShares": [
-          {
-            "recordVersion": "001",
-            "unquotedValue": 999999999.99,
-            "unquotedShareTotal": 0,
-            "unquotedCompany": "John Pvt Ltd",
-            "unquotedClass": "DC"
-          }
-        ]
+      "typeOfAssets" : {
+        "recordVersion" : "001",
+        "cashAssets" : "Yes",
+        "cashValue" : 0.02,
+        "unquotedShareAssets" : "No",
+        "moreUnquoted" : "No",
+        "quotedShareAssets" : "No",
+        "moreQuoted" : "No",
+        "propertyAsset" : "No",
+        "moreProp" : "No",
+        "otherAsset" : "No",
+        "moreAsset" : "No"
       }
     },
     "aboutReceivingQROPS": {
