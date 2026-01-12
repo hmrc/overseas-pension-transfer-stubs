@@ -34,16 +34,16 @@ class HipController @Inject() (
     resourceService: ResourceService
   ) extends BackendController(cc) with TimeDateHelpers with Logging {
 
-  def submitTransfer: Action[JsValue] = checkHeaders(parse.json) {
-    _ =>
-      def getRandomFormBundle: String = Random.nextLong(999999999999L).toString
-      def getRandomQtNumber: String   = s"QT${100000 + Random.nextInt(900000)}"
+  def submitTransfer: Action[JsValue] = checkHeaders(parse.json) { request =>
+    logger.info(s"Received request with body: ${Json.prettyPrint(request.body)}")
+    def getRandomFormBundle: String = Random.nextLong(999999999999L).toString
+    def getRandomQtNumber: String   = s"QT${100000 + Random.nextInt(900000)}"
 
-      Created(Json.obj("success" -> Json.obj(
-        "processingDate"   -> Instant.now,
-        "formBundleNumber" -> getRandomFormBundle,
-        "qtReference"      -> getRandomQtNumber
-      )))
+    Created(Json.obj("success" -> Json.obj(
+      "processingDate"   -> Instant.now,
+      "formBundleNumber" -> getRandomFormBundle,
+      "qtReference"      -> getRandomQtNumber
+    )))
   }
 
   def getAll(dateFrom: String, dateTo: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
