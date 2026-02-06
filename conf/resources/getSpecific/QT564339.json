@@ -21,7 +21,6 @@
             "addressLine1": "1 Hacienda Way",
             "addressLine2": "Madrid",
             "addressLine3": "01055",
-            "ukPostCode": "A00AA",
             "country": "AD"
           },
           "poBoxNumber": "AB"
@@ -35,7 +34,7 @@
               "addressLine2": "Madrid",
               "addressLine3": "01055",
               "addressLine4": "01 D",
-              "ukPostCode": "A00AA"
+              "ukPostCode": "ZZ11 1ZZ"
             },
             "dateMemberLeftUk": "2015-06-01"
           }
