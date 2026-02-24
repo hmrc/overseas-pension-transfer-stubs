@@ -20,9 +20,9 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
 import play.api.http.Status.{BAD_REQUEST, OK}
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.{JsObject, Json}
+import play.api.libs.json.Json
+import play.api.mvc.BodyParsers
 import play.api.mvc.Results.Ok
-import play.api.mvc.{BodyParsers, Request}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout, status, POST}
 
@@ -53,7 +53,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -76,7 +76,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -97,7 +97,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -118,7 +118,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -140,7 +140,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -162,7 +162,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -183,7 +183,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -204,7 +204,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -226,7 +226,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -247,7 +247,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
@@ -269,7 +269,7 @@ class CheckHeadersActionSpec extends AnyFreeSpec with Matchers {
 
         val result = action.invokeBlock(
           request,
-          { request: Request[JsObject] =>
+          { _ =>
             Future.successful(Ok("Success"))
           }
         )
