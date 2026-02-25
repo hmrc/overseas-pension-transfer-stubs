@@ -15,7 +15,7 @@
         "foreName": "Patrick",
         "lastName": "Pique",
         "dateOfBirth": "1979-04-12",
-        "nino": "AA000020A",
+        "nino": "GENERATED_AT_RUNTIME",
         "principalResAddDetails": {
           "addressDetails": {
             "addressLine1": "1 Hacienda Way",

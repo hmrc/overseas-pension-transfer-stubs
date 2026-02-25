@@ -15,7 +15,7 @@
         "foreName": "David",
         "lastName": "Warne",
         "dateOfBirth": "2025-03-14",
-        "nino": "AA000000A",
+        "nino": "GENERATED_AT_RUNTIME",
         "principalResAddDetails": {
           "addressDetails": {
             "addressLine1": "1 Hacienda Way",

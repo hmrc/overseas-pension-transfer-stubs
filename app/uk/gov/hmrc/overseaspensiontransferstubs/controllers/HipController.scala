@@ -74,13 +74,56 @@ class HipController @Inject() (
         val status  = (json \ "status").as[Int]
         val payload = (json \ "payload").toOption.getOrElse(Json.obj())
 
-        val subsWithRandomDates = setAllSubmissionDates(payload, pstr)
+        val stubsWithRandomDates = setAllSubmissionDates(payload, pstr)
+        val withRandomNinos      = setAllNinos(stubsWithRandomDates)
+
         status match {
-          case 200 => Ok(subsWithRandomDates)
+          case 200 => Ok(withRandomNinos)
           case 422 => UnprocessableEntity(payload)
           case _   => InternalServerError
         }
       })
+  }
+
+  private def setAllNinos(payload: JsValue): JsValue = {
+    val transfers = (payload \ "success" \ "qropsTransferOverview")
+      .asOpt[JsArray]
+      .orElse((payload \ "qropsTransferOverview").asOpt[JsArray])
+      .getOrElse(JsArray())
+
+    if (transfers.value.isEmpty && (payload \ "success" \ "qropsTransferOverview").asOpt[JsArray].isEmpty) {
+      return payload
+    }
+
+    val updatedTransfers = transfers.value.map { transfer =>
+      val obj = transfer.as[JsObject]
+      if ((obj \ "nino").toOption.isDefined) {
+        obj + ("nino" -> JsString(generateNino()))
+      } else {
+        obj
+      }
+    }
+
+    if ((payload \ "success" \ "qropsTransferOverview").asOpt[JsArray].isDefined) {
+      payload.as[JsObject] ++ Json.obj(
+        "success" -> Json.obj(
+          "qropsTransferOverview" -> JsArray(updatedTransfers)
+        )
+      )
+    } else if ((payload \ "qropsTransferOverview").asOpt[JsArray].isDefined) {
+      payload.as[JsObject] ++ Json.obj(
+        "qropsTransferOverview" -> JsArray(updatedTransfers)
+      )
+    } else {
+      payload
+    }
+  }
+
+  private def generateNino(prefix: String = "AA"): String = {
+    val num    = Random.nextInt(1000000)
+    val suffix = "C"
+    val nino   = f"$prefix$num%06d$suffix"
+    nino
   }
 
   private def setAllSubmissionDates(payload: JsValue, pstr: String): JsValue = {
@@ -119,8 +162,28 @@ class HipController @Inject() (
 
       resourceService.getResource("getSpecific", qtNumberOrDefault).fold(
         NotFound("getSpecific resource not found")
-      )(json =>
-        Ok(json)
-      )
+      )(json => {
+        val withRandomNino = setNino(json)
+        Ok(withRandomNino)
+      })
+  }
+
+  private def setNino(payload: JsValue): JsValue = {
+    payload match {
+      case obj: JsObject =>
+        val ninoPath = __ \ "success" \ "transferringMember" \ "memberDetails" \ "nino"
+
+        if ((obj \ "success" \ "transferringMember" \ "memberDetails" \ "nino").toOption.isDefined) {
+          obj.transform(
+            ninoPath.json.update(__.read[JsString].map(_ => JsString(generateNino())))
+          ) match {
+            case JsSuccess(updated, _) => updated
+            case JsError(_)            => obj
+          }
+        } else {
+          obj
+        }
+      case other         => other
+    }
   }
 }
