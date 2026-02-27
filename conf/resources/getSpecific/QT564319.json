@@ -15,7 +15,7 @@
         "foreName": "Sally",
         "lastName": "Scott",
         "dateOfBirth": "1962-03-14",
-        "nino": "AA100000A",
+        "nino": "GENERATED_AT_RUNTIME",
         "principalResAddDetails": {
           "addressDetails": {
             "addressLine1": "1 Hacienda Way",
