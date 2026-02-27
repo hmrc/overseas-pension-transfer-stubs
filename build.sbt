@@ -12,7 +12,6 @@ lazy val microservice = Project("overseas-pension-transfer-stubs", file("."))
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalafmtOnCompile := true
   )
-  .settings(resolvers += Resolver.jcenterRepo)
   .settings(CodeCoverageSettings.settings *)
   .settings(PlayKeys.playDefaultPort := 15602)
 
