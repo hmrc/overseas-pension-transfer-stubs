@@ -63,10 +63,7 @@ class HipController @Inject() (
   }
 
   def getAll(
-      @annotation.unused dateFrom: String,
-      @annotation.unused dateTo: String,
-      pstr: String,
-      @annotation.unused qtRef: Option[String] = None
+      pstr: String
     ): Action[AnyContent] = checkHeaders {
     resourceService.getResource("getAll", pstr).fold(
       UnprocessableEntity(Json.obj("errors" -> Json.obj(
@@ -153,9 +150,7 @@ class HipController @Inject() (
   }
 
   def getSpecific(
-      @annotation.unused pstr: String,
-      qtNumber: Option[String]                         = None,
-      @annotation.unused versionNumber: Option[String] = None
+      qtNumber: Option[String] = None
     ): Action[AnyContent] = checkHeaders {
     val qtRegex: Regex = "QT5643[1-5][0-9]".r
 
