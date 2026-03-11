@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.overseaspensiontransferstubs.controllers
 
-import org.mockito.ArgumentMatchers.{any, eq => meq}
+import org.mockito.ArgumentMatchers.eq as meq
 import org.mockito.Mockito.when
 import org.scalatest.OptionValues.convertOptionToValuable
 import org.scalatest.freespec.AnyFreeSpec
@@ -27,7 +27,7 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsArray, JsObject, JsString, Json}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.overseaspensiontransferstubs.services.ResourceService
 
 import java.time.Instant

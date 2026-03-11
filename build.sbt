@@ -1,7 +1,7 @@
 import uk.gov.hmrc.DefaultBuildSettings
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.16"
+ThisBuild / scalaVersion := "3.3.7"
 
 lazy val microservice = Project("overseas-pension-transfer-stubs", file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
@@ -12,8 +12,7 @@ lazy val microservice = Project("overseas-pension-transfer-stubs", file("."))
     scalacOptions += "-Wconf:src=routes/.*:s",
     scalafmtOnCompile := true
   )
-  .settings(resolvers += Resolver.jcenterRepo)
-  .settings(CodeCoverageSettings.settings: _*)
+  .settings(CodeCoverageSettings.settings *)
   .settings(PlayKeys.playDefaultPort := 15602)
 
 

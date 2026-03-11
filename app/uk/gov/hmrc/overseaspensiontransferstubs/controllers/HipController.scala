@@ -62,27 +62,28 @@ class HipController @Inject() (
       }
   }
 
-  def getAll(dateFrom: String, dateTo: String, pstr: String, qtRef: Option[String] = None): Action[AnyContent] = checkHeaders {
-    _ =>
-      resourceService.getResource("getAll", pstr).fold(
-        UnprocessableEntity(Json.obj("errors" -> Json.obj(
-          "processingDate" -> "2025-10-17T15:24:15.128497Z", // Aware this isn't dynamic - date is irrelevant in service and simplifies unit test
-          "code"           -> "183",
-          "text"           -> "Not Found"
-        )))
-      )(json => {
-        val status  = (json \ "status").as[Int]
-        val payload = (json \ "payload").toOption.getOrElse(Json.obj())
+  def getAll(
+      pstr: String
+    ): Action[AnyContent] = checkHeaders {
+    resourceService.getResource("getAll", pstr).fold(
+      UnprocessableEntity(Json.obj("errors" -> Json.obj(
+        "processingDate" -> "2025-10-17T15:24:15.128497Z", // Aware this isn't dynamic - date is irrelevant in service and simplifies unit test
+        "code"           -> "183",
+        "text"           -> "Not Found"
+      )))
+    )(json => {
+      val status  = (json \ "status").as[Int]
+      val payload = (json \ "payload").toOption.getOrElse(Json.obj())
 
-        val stubsWithRandomDates = setAllSubmissionDates(payload, pstr)
-        val withRandomNinos      = setAllNinos(stubsWithRandomDates)
+      val stubsWithRandomDates = setAllSubmissionDates(payload, pstr)
+      val withRandomNinos      = setAllNinos(stubsWithRandomDates)
 
-        status match {
-          case 200 => Ok(withRandomNinos)
-          case 422 => UnprocessableEntity(payload)
-          case _   => InternalServerError
-        }
-      })
+      status match {
+        case 200 => Ok(withRandomNinos)
+        case 422 => UnprocessableEntity(payload)
+        case _   => InternalServerError
+      }
+    })
   }
 
   private def setAllNinos(payload: JsValue): JsValue = {
@@ -127,7 +128,7 @@ class HipController @Inject() (
   }
 
   private def setAllSubmissionDates(payload: JsValue, pstr: String): JsValue = {
-    val path = (__ \ "success" \ "qropsTransferOverview")
+    val path = __ \ "success" \ "qropsTransferOverview"
 
     (payload \ "success" \ "qropsTransferOverview").asOpt[JsArray] match {
       case Some(arr) =>
@@ -135,9 +136,10 @@ class HipController @Inject() (
           arr.value.zipWithIndex.map {
             case (o: JsObject, idx) =>
               val seed = s"$pstr#$idx"
-              // We could also add the dateFrom and dateTo into the generator
               val inst = generateBiasedSeededInstant(seed)
               o + ("submissionCompilationDate" -> JsString(inst.toString))
+            case (other, _)         =>
+              throw new IllegalArgumentException(s"Expected JsObject but got: ${other.getClass.getSimpleName}")
           }
         )
         payload.transform(path.json.put(updatedArr)).getOrElse(payload)
@@ -148,24 +150,21 @@ class HipController @Inject() (
   }
 
   def getSpecific(
-      pstr: String,
-      qtNumber: Option[String]      = None,
-      versionNumber: Option[String] = None
+      qtNumber: Option[String] = None
     ): Action[AnyContent] = checkHeaders {
-    _ =>
-      val qtRegex: Regex = "QT5643[1-5][0-9]".r
+    val qtRegex: Regex = "QT5643[1-5][0-9]".r
 
-      val qtNumberOrDefault = qtNumber match {
-        case Some(qtRegex()) => qtNumber.get
-        case _               => resourceService.DEFAULT_REFERENCE
-      }
+    val qtNumberOrDefault = qtNumber match {
+      case Some(qtRegex()) => qtNumber.get
+      case _               => resourceService.DEFAULT_REFERENCE
+    }
 
-      resourceService.getResource("getSpecific", qtNumberOrDefault).fold(
-        NotFound("getSpecific resource not found")
-      )(json => {
-        val withRandomNino = setNino(json)
-        Ok(withRandomNino)
-      })
+    resourceService.getResource("getSpecific", qtNumberOrDefault).fold(
+      NotFound("getSpecific resource not found")
+    )(json => {
+      val withRandomNino = setNino(json)
+      Ok(withRandomNino)
+    })
   }
 
   private def setNino(payload: JsValue): JsValue = {
