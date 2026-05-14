@@ -11,15 +11,15 @@ This is the stub microservice for Overseas Pension Transfer service. This servic
 
 2. Stop the frontend microservice from the service manager and run it locally:
 
-   > `sm2 --stop OVERSEAS_PENSION_TRANSFER_STUB`
+   > `sm2 --stop OVERSEAS_PENSION_TRANSFER_STUBS`
 
    > `sbt run`
 
 The service runs on port `15602` by default.
 
-## Test Data Matrix
+## Endpoints
 
-getAll and getSpecific
+### The GET endpoints /qrops-transfer-overview and /qrops-transfer
 
 The stub uses PSTR for the references for JSON files for returned payloads in order to mimic the data that is required by HIP.
 In order to ensure the correct PSTR is sent the below matrix matches SRN (required for access to frontend), PSA/PSP ID (required for authentication in the frontend service).
@@ -37,15 +37,17 @@ In order to ensure the correct PSTR is sent the below matrix matches SRN (requir
 |              |             |           |           |
 | S2400000015  | 24000015IN  | A2100005  | 21000005  |
 
-submitTransfer
+The response JSON files are located in conf/resources/getAll (/qrops-transfer-overview) and conf/resources/getSpecific (/qrops-transfer).
+
+### The POST endpoint /qrops-transfer
 
 The stub for when a user submits their transfer to HMRC. The stub will return 201 status code and randomly generated QT reference and Form Bundle Number and the current timestamp is returned as the processingDate.
 
-### Unit tests
+## Unit tests
 
 > `sbt test`
 
-### Integreation tests
+## Integration tests
 
 > `sbt it/test`
 
