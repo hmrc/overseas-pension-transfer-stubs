@@ -3,21 +3,35 @@ import uk.gov.hmrc.DefaultBuildSettings
 ThisBuild / majorVersion := 0
 ThisBuild / scalaVersion := "3.3.7"
 
+val commonSettings: Seq[String] = Seq(
+  "-unchecked",
+  "-feature",
+  "-deprecation",
+  "-language:noAutoTupling",
+  "-Wvalue-discard",
+  "-Werror",
+  "-Wconf:src=routes/.*:s",
+  "-Wunused:unsafe-warn-patvars",
+  "-Wconf:msg=Flag.*repeatedly:s"
+)
+
 lazy val microservice = Project("overseas-pension-transfer-stubs", file("."))
   .enablePlugins(play.sbt.PlayScala, SbtDistributablesPlugin)
   .settings(
     libraryDependencies ++= AppDependencies.compile ++ AppDependencies.test,
     // https://www.scala-lang.org/2021/01/12/configuring-and-suppressing-warnings.html
     // suppress warnings in generated routes files
-    scalacOptions += "-Wconf:src=routes/.*:s",
+    scalacOptions ++= commonSettings,
     scalafmtOnCompile := true
   )
-  .settings(CodeCoverageSettings.settings *)
+  .settings(CodeCoverageSettings.settings*)
   .settings(PlayKeys.playDefaultPort := 15602)
-
 
 lazy val it = project
   .enablePlugins(PlayScala)
   .dependsOn(microservice % "test->test")
   .settings(DefaultBuildSettings.itSettings())
-  .settings(libraryDependencies ++= AppDependencies.it)
+  .settings(
+    libraryDependencies ++= AppDependencies.it,
+    scalacOptions ++= commonSettings
+  )
