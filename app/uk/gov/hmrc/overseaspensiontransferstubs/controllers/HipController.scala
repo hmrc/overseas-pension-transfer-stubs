@@ -38,6 +38,7 @@ class HipController @Inject() (
   def submitTransfer: Action[JsValue] = checkHeaders(parse.json) {
     request =>
       val userId = (request.body \ "qtDeclaration" \ "submitterId").as[String]
+
       if (userId == "A2100060") {
         InternalServerError(Json.obj(
           "origin"   -> "HoD",
@@ -93,38 +94,38 @@ class HipController @Inject() (
       .getOrElse(JsArray())
 
     if (transfers.value.isEmpty && (payload \ "success" \ "qropsTransferOverview").asOpt[JsArray].isEmpty) {
-      return payload
-    }
+      payload
+    } else {
 
-    val updatedTransfers = transfers.value.map { transfer =>
-      val obj = transfer.as[JsObject]
-      if ((obj \ "nino").toOption.isDefined) {
-        obj + ("nino" -> JsString(generateNino()))
-      } else {
-        obj
+      val updatedTransfers = transfers.value.map { transfer =>
+        val obj = transfer.as[JsObject]
+        if ((obj \ "nino").toOption.isDefined) {
+          obj + ("nino" -> JsString(generateNino()))
+        } else {
+          obj
+        }
       }
-    }
 
-    if ((payload \ "success" \ "qropsTransferOverview").asOpt[JsArray].isDefined) {
-      payload.as[JsObject] ++ Json.obj(
-        "success" -> Json.obj(
+      if ((payload \ "success" \ "qropsTransferOverview").asOpt[JsArray].isDefined) {
+        payload.as[JsObject] ++ Json.obj(
+          "success" -> Json.obj(
+            "qropsTransferOverview" -> JsArray(updatedTransfers)
+          )
+        )
+      } else if ((payload \ "qropsTransferOverview").asOpt[JsArray].isDefined) {
+        payload.as[JsObject] ++ Json.obj(
           "qropsTransferOverview" -> JsArray(updatedTransfers)
         )
-      )
-    } else if ((payload \ "qropsTransferOverview").asOpt[JsArray].isDefined) {
-      payload.as[JsObject] ++ Json.obj(
-        "qropsTransferOverview" -> JsArray(updatedTransfers)
-      )
-    } else {
-      payload
+      } else {
+        payload
+      }
     }
   }
 
   private def generateNino(prefix: String = "AA"): String = {
     val num    = Random.nextInt(1000000)
     val suffix = "C"
-    val nino   = f"$prefix$num%06d$suffix"
-    nino
+    f"$prefix$num%06d$suffix"
   }
 
   private def setAllSubmissionDates(payload: JsValue, pstr: String): JsValue = {
