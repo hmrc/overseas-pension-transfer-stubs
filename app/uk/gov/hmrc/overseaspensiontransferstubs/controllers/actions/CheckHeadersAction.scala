@@ -43,17 +43,14 @@ class CheckHeadersActionImpl @Inject() (
     val transmittingSystem = headers.get("X-Transmitting-System")
 
     def evaluateHeader(header: Option[String], validate: String => Boolean): Boolean =
-      header match {
-        case Some(string) => validate(string)
-        case None         => false
-      }
+      header.fold(false)(validate)
 
     correlationId.isDefined &&
     messageType.isDefined &&
-    evaluateHeader(originatingSystem, (str: String) => str == "MDTP") &&
+    evaluateHeader(originatingSystem, _ == "MDTP") &&
     receiptDate.isDefined &&
-    evaluateHeader(regimeType, (str: String) => str == "PODS") &&
-    evaluateHeader(transmittingSystem, (str: String) => str == "HIP")
+    evaluateHeader(regimeType, _ == "PODS") &&
+    evaluateHeader(transmittingSystem, _ == "HIP")
   }
 
 }

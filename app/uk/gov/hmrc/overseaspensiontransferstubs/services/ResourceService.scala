@@ -22,10 +22,6 @@ class ResourceService {
 
   val DEFAULT_REFERENCE: String = "QT564339"
 
-  def getResource(path: String, identifier: String): Option[JsValue] = {
-    getClass.getResourceAsStream(s"/resources/$path/$identifier.json") match {
-      case null        => None
-      case inputStream => Some(Json.parse(inputStream))
-    }
-  }
+  def getResource(path: String, identifier: String): Option[JsValue] =
+    Option(getClass.getResourceAsStream(s"/resources/$path/$identifier.json")).map(Json.parse)
 }
