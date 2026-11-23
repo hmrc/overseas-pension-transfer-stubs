@@ -47,8 +47,7 @@
       "allowanceBeforeTransfer": 9999999.99,
       "dateMemberTransferred": "2025-07-22",
       "cashOnlyTransfer": "No",
-      "paymentTaxableOverseas": "No",
-      "reasonNoOverseasTransfer": ["01"],
+      "paymentTaxableOverseas": "Yes",
       "taxableOverseasTransferDetails": {
         "whyTaxableOT": "01",
         "applicableExclusion": ["01"],
@@ -90,8 +89,7 @@
         "country": "AD"
       },
       "receivingQropsEstablishedDetails": {
-        "qropsEstablished": "AD",
-        "qropsEstablishedOther": "AB"
+        "qropsEstablished": "AD"
       },
       "qropsSchemeManagerType": {
         "schemeManagerType": "01",
